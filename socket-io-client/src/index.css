@@ -1,5 +1,118 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+:root {
+  --primary-color: #673AB7;
+  --accent-color: #FFEB3B;
+  --light-primary-color: #D1C4E9;
+  --dark-primary-color: #512DA8;
+  --text-primary: white;
+  --text-secondary: #212121;
+  --sec-text-secondary: #757575;
 }
+
+	
+body {
+  font-family: sans-serif;
+  background-color: var(--primary-color);
+  color: #FFFFFF;
+  text-align: center;
+}
+
+form {
+	background-color: var(--light-primary-color);
+	color: var(--text-secondary);
+	border-style: solid;
+	text-align: center;
+	padding: 3rem;
+}
+
+h1{
+	margin-bottom: 10%;
+}
+
+.subscribe{
+	background-color: var(--accent-color);
+}
+
+.form-fields{
+	text-align: left;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.waiting{
+	width:100%;
+	margin-top: 20%;
+}
+
+.loading-icon{
+	margin: auto 0;
+}
+
+.start-game{
+	background-color: var(--accent-color);
+	color: var(--text-secondary);
+}
+
+/*Breathing button*/
+
+#breathing-button {
+    width: 250px;
+    padding: 20px;
+    margin: 50px auto;
+    border: 1px solid #d1d1d1;
+    -webkit-animation: breathing 3s ease-out infinite normal;
+    animation: breathing 3s ease-out infinite normal;
+    font-size: 24px;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 3px;
+    text-align: center;    
+    }
+
+
+@-webkit-keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+

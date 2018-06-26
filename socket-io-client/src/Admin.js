@@ -87,6 +87,8 @@ class Admin extends Component {
         const { response } = this.state;
         return (
             <button type="button"
+              className="start-game"
+              id="breathing-button"
               onClick= {() =>{
                   this.setState({
             step :1
@@ -95,7 +97,7 @@ class Admin extends Component {
 
 
                 }}
-            >Start new game</button>);
+            >Nuevo juego</button>);
         break;
 
       case 1:
