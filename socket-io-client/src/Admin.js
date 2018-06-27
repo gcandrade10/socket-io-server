@@ -110,7 +110,14 @@ class Admin extends Component {
             {this.state.response
               ?
               this.renderUsers()
-              : <p>Loading...</p>}            
+              : <div className="waiting">
+                  <h2>Esperando a jugadores...</h2>
+                  <br/>
+                  <img 
+                    src="./loading_gif.gif" 
+                    alt="loading gif" 
+                    className="loading-icon"/>
+                </div>}            
           </div>
         );
 
