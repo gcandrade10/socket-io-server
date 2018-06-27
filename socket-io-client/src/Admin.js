@@ -46,6 +46,12 @@ class Admin extends Component {
       timerInstance.start();
       this.startTimer();
     });
+
+    this.socket.on("bienvenida", data => {
+      console.log(data);
+      this.setState({ step : 0, question:data })
+      } 
+    );
   }
 
   renderUsers()
@@ -84,7 +90,6 @@ class Admin extends Component {
 
     switch (this.state.step) {
       case 0:
-        const { response } = this.state;
         return (
             <button type="button"
               className="start-game"
@@ -98,21 +103,16 @@ class Admin extends Component {
 
                 }}
             >Nuevo juego</button>);
-        break;
-
+        
       case 1:
-
       return (
           <div style={{ textAlign: "center" }}>
             {this.state.response
               ?
               this.renderUsers()
-              : <p>Loading...</p>}
-
-               
+              : <p>Loading...</p>}            
           </div>
         );
-      break;
 
       case 2:
       return <div>
@@ -120,8 +120,9 @@ class Admin extends Component {
         <br/>
       <div>{this.state.question.text}</div>
       </div>
-      break;
  
+      default:
+        return (<div>Hay un error en el switch de Admin.js</div>);
     }
 
     
