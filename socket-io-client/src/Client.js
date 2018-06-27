@@ -16,7 +16,7 @@ class Admin extends Component {
     this.handleChangeNombre = this.handleChangeNombre.bind(this);
     this.handleChangeCorreo = this.handleChangeCorreo.bind(this);
     this.handleChangeCodigo = this.handleChangeCodigo.bind(this);
-	  this.handleChangeAbierta = this.handleChangeAbierta.bind(this);
+	this.handleChangeAbierta = this.handleChangeAbierta.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitFinal = this.handleSubmitFinal.bind(this);
     this.renderName = this.renderName.bind(this);
@@ -37,19 +37,12 @@ class Admin extends Component {
   }
 
   handleSubmit(event) {
-    const { endpoint } = this.state;
-    this.socket= socketIOClient(endpoint);
+    
     this.info = {nombre:this.state.nombre, correo:this.state.correo, codigo:this.state.codigo};
 	this.socket.emit("Registro", this.info);
 
 	this.setState({step: 1});
-
-
-    this.socket.on("question", data => {
-    	console.log(data);
-    	this.setState({ step : 2, question:data })
-    	}	
-    );
+  
     event.preventDefault();
     swal("Registro exitoso!", "Felicidades " + this.state.nombre + ". Te has registrado exitosamente!", "success");
   }
@@ -67,6 +60,24 @@ class Admin extends Component {
   {
   	this.socket.emit("cerrada", 1);
   	swal("Respuesta enviada", "success");
+  }
+
+  componentDidMount()
+  {
+  	const { endpoint } = this.state;
+    this.socket= socketIOClient(endpoint);
+    
+    this.socket.on("bienvenida", data => {
+    	console.log(data);
+    	this.setState({ step : -1, question:data })
+    	}	
+    );
+
+    this.socket.on("question", data => {
+    	console.log(data);
+    	this.setState({ step : 2, question:data })
+    	}	
+    );
   }
 
   renderOptions()
@@ -133,7 +144,7 @@ class Admin extends Component {
 
   renderName(username) {
     console.log(username);
-    if (username != ''){
+    if (username !== ''){
       return ( ', '+ username );
     } else {
       return ('');
@@ -190,7 +201,6 @@ class Admin extends Component {
         </div>
       </div>
 		);
-        break;
         case 1:
         return (<div className="waiting">
                   <h2>Esperando a otros jugadores...</h2>
@@ -198,12 +208,14 @@ class Admin extends Component {
                   <img 
                     src="./loading_gif.gif" 
                     alt="loading gif" 
-                    className="loading-icon"></img  >
-                </div>)
-        break;
+                    className="loading-icon"/>
+                </div>);
+        
         case 2:
         return this.renderOptions();
-        break;
+
+        default:
+        return (<div>{this.state.question}</div>);
    
 		}
 

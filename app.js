@@ -5,16 +5,21 @@ const axios = require("axios");
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
 const app = express();
-app.use(index);
 const server = http.createServer(app);
+const io = socketIo(server); // < Interesting!
+app.use(index);
+
 let clients=[];
 let clientsInfo=[];
 let cerradas=0;
-const io = socketIo(server); // < Interesting!
+let abiertas=0;
+let activeGame=false;
+
 io.on("connection", socket => {
+  
   console.log("New client connected");
   clients.push(socket);
-  socket.emit("FromAPI", 10);
+
   socket.on("disconnect", () => console.log("Client disconnected"));
 
   socket.on("Registro", data => {
@@ -27,17 +32,24 @@ io.on("connection", socket => {
     cerradas++;
     if(cerradas===clientsInfo.length)
     {
-    var question = {text:"¿Por qué es el valor?", abierta:true};
-    emit("question",question);    }
+      var question = {text:"¿Por qué es el valor?", abierta:true};
+      emit("question",question);    }
   });
 
   socket.on("EntradaBD", data => {
-    console.log(data);
+    console.log("guardando en bd "+data);
+    abiertas++;
+    if(abiertas===clientsInfo.length)
+    {
+      emit("bienvenida","el juego terminó, gracias por participar");
+      activeGame=false;
+    }
   });
-
-  socket.on("Change", data => {
-  emit("FromAPI",20);
-		});
+  
+  if(!activeGame)
+  {
+    socket.emit("bienvenida","Aun no hay un juego para unirse");
+  }
 });
 
 const emit= (key,newValue)=>
@@ -56,6 +68,7 @@ app.get("/api/reset", (req, res) =>
   console.log(clients.length+" "+clientsInfo.length);
   clientsInfo=[];
   cerradas=0;
+  activeGame=true;
   console.log(clients.length+" "+clientsInfo.length);
   res.send("ok");
 });
