@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
+import './admin.css';
 
 let Timer = require('easytimer');
 let timerInstance = new Timer();
@@ -90,10 +91,9 @@ class Admin extends Component {
 
     switch (this.state.step) {
       case 0:
-        return (
+        return (<div className="admin-general">
             <button type="button"
-              className="start-game"
-              id="breathing-button"
+              className="btn start-game"
               onClick= {() =>{
                   this.setState({
             step :1
@@ -102,34 +102,30 @@ class Admin extends Component {
 
 
                 }}
-            >Nuevo juego</button>);
+            >Nuevo juego</button></div>);
         
       case 1:
       return (
-          <div style={{ textAlign: "center" }}>
+          <div className="admin-general"
+          style={{ textAlign: "center" }}>
             {this.state.response
               ?
               this.renderUsers()
               : <div className="waiting">
-                  <h2>Esperando a jugadores...</h2>
-                  <br/>
-                  <img 
-                    src="./loading_gif.gif" 
-                    alt="loading gif" 
-                    className="loading-icon"/>
+                  <h1>Esperando a los jugadores</h1>
                 </div>}            
           </div>
         );
 
       case 2:
-      return <div>
+      return <div className="admin-general">
         <div>{this.state.time}</div>
         <br/>
       <div>{this.state.question.text}</div>
       </div>
  
       default:
-        return (<div>Hay un error en el switch de Admin.js</div>);
+        return (<div className="admin-general">Hay un error en el switch de Admin.js</div>);
     }
 
     

@@ -1,36 +1,140 @@
 :root {
   --primary-color: #673AB7;
-  --accent-color: #FFEB3B;
+  --accent-color: #FF7300;
   --light-primary-color: #D1C4E9;
   --dark-primary-color: #512DA8;
   --text-primary: white;
-  --text-secondary: #212121;
+  --text-secondary: #353C8C;
   --sec-text-secondary: #757575;
 }
 
-	
 body {
   font-family: sans-serif;
-  background-color: var(--primary-color);
+  background-color: black;
   color: #FFFFFF;
   text-align: center;
 }
 
-form {
-	background-color: var(--light-primary-color);
-	color: var(--text-secondary);
-	border-style: solid;
-	text-align: center;
-	padding: 3rem;
+/**CLIENTE**/
+body .client-general{
+  width: stretch;
+  height: stretch;
+  background-image: url("./admin/background-right.png"),
+                    url("./admin/background-left.png"),
+                    url("./client/background.png");
+  background-repeat: no-repeat,
+      no-repeat,
+      no-repeat;
+  background-position: right,
+      left,
+      center;
+  background-size: 100%,
+  100%,
+  cover;
+  text-align: center;
 }
 
-h1{
-	margin-bottom: 10%;
+.login-form {
+  width: 80%;
+  margin: 0px auto;
+  background-color:rgba(57, 65, 140, 0.7);
+  font-family: 'Hind', sans-serif;
+  padding-bottom: 5%;
+}
+
+.login-form h1{
+  font-size: 6vw;
+  padding-bottom: 5%;
+  } 
+
+.login-form .row-content{
+  font-size: 2.5vw;
 }
 
 .subscribe{
-	background-color: var(--accent-color);
+  background-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: var(--text-primary);
+  font-size: 3vw;
+  margin-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
+.client-general .header{
+  width:100%;
+  height:15vh;
+  overflow:hidden;
+  background: white;
+  text-align: left;
+  box-shadow: 5px 5px 3px black;
+}
+
+.client-general .image-banner{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 30vh;
+  padding-left: 10px;
+}
+
+.client-general .waiting {
+  width: 70%;
+  margin: 0px auto;
+  background: rgb(255, 255, 255, 0.5);
+  color: var(--text-secondary);
+}
+
+.client-general .waiting h1 {
+  font-size: 7vw; 
+  padding: 5%;
+}
+
+/**ADMINISTRADOR**/
+body .admin-general {
+  width: stretch;
+  height: stretch;
+  background-image: url("./admin/background-right.png"),
+                    url("./admin/background-left.png"),
+                    url("./admin/background.png");
+  background-repeat: no-repeat,
+      no-repeat,
+      no-repeat;
+  background-position: right,
+      left,
+      center;
+  background-size: 100%,
+  100%,
+  100%;
+  text-align: center;
+}
+
+.admin-general .waiting {
+  margin-top: 5%;
+  padding-top: 5%;
+   margin:0px auto;
+  width: 65%;
+  padding-bottom: 5%;
+  background-color:rgba(0, 0, 0, 0.7);
+}
+
+.admin-general .waiting h1{
+  font-size: 10vw;
+  font-family: 'Hind', sans-serif;
+  font-style: bold;
+}
+	
+.start-game{
+  background-color: var(--accent-color);
+  color: var(--text-primary);
+  font-size: 3vw;
+  margin-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+  font-style: bold;
+  font-family: 'Hind', sans-serif;
+  box-shadow: 5px 5px 3px rgb(10,10,10);
+}
+
+
 
 .form-fields{
 	text-align: left;
@@ -38,82 +142,7 @@ h1{
 	margin-right: 10%;
 }
 
-.waiting{
-	width:100%;
-	margin-top: 20%;
-}
-
 .loading-icon{
 	margin: auto 0;
-}
-
-.start-game{
-	background-color: var(--accent-color);
-	color: var(--text-secondary);
-}
-
-
-/*Breathing button*/
-
-#breathing-button {
-    width: 250px;
-    padding: 20px;
-    margin: 50px auto;
-    border: 1px solid #d1d1d1;
-    -webkit-animation: breathing 3s ease-out infinite normal;
-    animation: breathing 3s ease-out infinite normal;
-    font-size: 24px;
-    -webkit-font-smoothing: antialiased;
-    border-radius: 3px;
-    text-align: center;    
-    }
-
-
-@-webkit-keyframes breathing {
-  0% {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-
-  25% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-
-  60% {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-
-  100% {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-}
-
-@keyframes breathing {
-  0% {
-    -webkit-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-
-  25% {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-  }
-
-  60% {
-    -webkit-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-
-  100% {
-    -webkit-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
-  }
 }
 

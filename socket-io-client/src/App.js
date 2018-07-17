@@ -7,7 +7,7 @@ import Client from "./Client";
 class App extends Component {
   render() {
     return (
-      <main className="container">
+      <main>
     <Switch>
       <Route exact path='/admin' component={Admin}/>
       <Route path='/' component={Client}/>

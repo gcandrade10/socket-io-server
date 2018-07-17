@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import swal from 'sweetalert';
+import './client.css';
 
-class Admin extends Component {
+class Client extends Component {
   constructor() {
     super();
     this.state = {
       response: false,
       endpoint: "http://127.0.0.1:4001",
       nombre: "",
-      correo: "",
       codigo: "",
       step:0
     };
     this.handleChangeNombre = this.handleChangeNombre.bind(this);
-    this.handleChangeCorreo = this.handleChangeCorreo.bind(this);
     this.handleChangeCodigo = this.handleChangeCodigo.bind(this);
 	this.handleChangeAbierta = this.handleChangeAbierta.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,9 +25,6 @@ class Admin extends Component {
   handleChangeNombre(event) {
     this.setState({nombre: event.target.value});
   }
-  handleChangeCorreo(event) {
-    this.setState({correo: event.target.value});
-  }
   handleChangeCodigo(event) {
     this.setState({codigo: event.target.value});
   }
@@ -38,7 +34,7 @@ class Admin extends Component {
 
   handleSubmit(event) {
     
-    this.info = {nombre:this.state.nombre, correo:this.state.correo, codigo:this.state.codigo};
+    this.info = {nombre:this.state.nombre, codigo:this.state.codigo};
 	this.socket.emit("Registro", this.info);
 
 	this.setState({step: 1});
@@ -158,14 +154,24 @@ class Admin extends Component {
     	switch (this.state.step) {
     	case 0:
         return (
+        <div className="client-general">
+        <div className="header">
+                    <img className="image-banner"
+                          src="./uniandes.png"
+                          alt="uniandes logo" />
+        </div>
         <div className="login-form">
-          <div className="row">
-            <h1>Bienvenido{this.renderName(this.state.nombre)}! Completa el formulario!</h1>
+          <div className="row row-title">
+            <h1>Para iniciar, identifícate</h1>
           </div>
-          <div className="row">
-  	       <form className="col-sm-12" onSubmit={this.handleSubmit}>
+          <div className="row row-content">
+          <div className="col-sm-1"/>
+          <img className="col-sm-3 login-icon img-responsive" 
+                src="./login_icon.png"
+                alt="login icon" />
+  	       <form className="col-sm-8" onSubmit={this.handleSubmit}>
              <div className="form-fields">
-              <div className="form-group">
+              <div className="form-group">  
     	         <label>Nombre</label>
     	          <input 
                   type="text" 
@@ -174,19 +180,9 @@ class Admin extends Component {
                   className="form-control"
                   required
                   autoFocus />
-              </div>
+              </div>    
               <div className="form-group">
-    	          <label>Correo</label>
-    	          <input 
-                  type="text" 
-                  value={this.state.correo} 
-                  onChange={this.handleChangeCorreo}
-                  className="form-control"
-                  required
-                  autoFocus />
-              </div>
-              <div className="form-group">
-    	          <label>Código</label>
+    	          <label>No. identificación</label>
     	          <input 
                   type="text" 
                   value={this.state.codigo} 
@@ -196,30 +192,33 @@ class Admin extends Component {
                   autoFocus />
     	        </div>
             </div>
-  	        <button id="breathing-button" type="submit" className="btn subscribe">Entrar</button>
+  	        <button type="submit" className="btn subscribe">Jugar</button>
   	      </form>
+        </div>
         </div>
       </div>
 		);
         case 1:
-        return (<div className="waiting">
-                  <h2>Esperando a otros jugadores...</h2>
-                  <br/>
-                  <img 
-                    src="./loading_gif.gif" 
-                    alt="loading gif" 
-                    className="loading-icon"/>
+        return (<div className="client-general">
+                  <div className="header">
+                    <img className="image-banner"
+                          src="./uniandes.png"
+                          alt="uniandes logo"/>
+                  </div>
+                  <div className="waiting">
+                  <h1>Espera mientras se registran los demás jugadores</h1>
+                  </div>
                 </div>);
         
         case 2:
-        return this.renderOptions();
+        return (<div className="client-general">{this.renderOptions()}</div>);
 
         default:
-        return (<div>{this.state.question}</div>);
+        return (<div className="client-general">{this.state.question}</div>);
    
 		}
 
     
   }
 }
-export default Admin;
+export default Client;
