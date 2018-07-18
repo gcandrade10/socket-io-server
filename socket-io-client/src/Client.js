@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import swal from 'sweetalert';
 import './client.css';
+import Footer from './Footer.js';
 
 class Client extends Component {
   constructor() {
@@ -15,7 +16,7 @@ class Client extends Component {
     };
     this.handleChangeNombre = this.handleChangeNombre.bind(this);
     this.handleChangeCodigo = this.handleChangeCodigo.bind(this);
-	this.handleChangeAbierta = this.handleChangeAbierta.bind(this);
+	  this.handleChangeAbierta = this.handleChangeAbierta.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitFinal = this.handleSubmitFinal.bind(this);
     this.renderName = this.renderName.bind(this);
@@ -92,49 +93,58 @@ class Client extends Component {
   	}
   	else
   	{
-  		return <div>
+  		return (
+        <div className="container closed-question">
+          <div className="row"> 
+      		  <button 
+              className="btn option col-sm-6 form-group"
+              type="button"
+            	onClick = {() =>{
+                	this.setState({
+                	 cerrada :"Libertad"
+              		});
+              		this.sendCerrada();
+              }}
+            ><bold>a. Libertad</bold>
+            </button>
+            <button 
+              className="btn option col-sm-6 form-group"
+              type="button"
+            	onClick= {() =>{
+                	this.setState({
+                	cerrada :"Excelencia"
+              		});
+              		this.sendCerrada();
+                }}
+            ><bold>c. Excelencia</bold>
+            </button>
+          </div>
+          <div className="row">
+            <button 
+              className="btn option col-sm-6 pl-1 pr-1"
+              type="button"
+            	onClick= {() =>{
+                	this.setState({
+                	cerrada :"Solidaridad"
+              		});
+              		this.sendCerrada();
+                }}
+            ><bold>b. Solidaridad</bold>
+            </button>
 
-  		<button type="button"
-        	onClick= {() =>{
-            	this.setState({
-            	cerrada :this.state.question.op1
-          		});
-          		this.sendCerrada();
-            }}
-        >{this.state.question.op1}
-        </button>
-
-        <button type="button"
-        	onClick= {() =>{
-            	this.setState({
-            	cerrada :this.state.question.op2
-          		});
-          		this.sendCerrada();
-            }}
-        >{this.state.question.op2}
-        </button>
-
-        <button type="button"
-        	onClick= {() =>{
-            	this.setState({
-            	cerrada :this.state.question.op3
-          		});
-          		this.sendCerrada();
-            }}
-        >{this.state.question.op3}
-        </button>
-
-        <button type="button"
-        	onClick= {() =>{
-            	this.setState({
-            	cerrada :this.state.question.op4
-          		});
-          		this.sendCerrada();
-            }}
-        >{this.state.question.op4}
-        </button>
-  			
-  		</div>
+            <button 
+              className="btn option col-sm-6 ml-1 mr-1"
+              type="button"
+            	onClick= {() =>{
+                	this.setState({
+                	cerrada :"Integridad"
+              		});
+              		this.sendCerrada();
+                }}
+            ><bold>d. Integridad</bold>
+            </button>
+  			   </div>
+  		</div>);
   	}
   }
 
@@ -196,6 +206,7 @@ class Client extends Component {
   	      </form>
         </div>
         </div>
+        <Footer />
       </div>
 		);
         case 1:
@@ -206,15 +217,22 @@ class Client extends Component {
                           alt="uniandes logo"/>
                   </div>
                   <div className="waiting">
-                  <h1>Espera mientras se registran los demás jugadores</h1>
+                  <h1><bold>Espera mientras se registran los demás jugadores</bold></h1>
                   </div>
+                  <Footer />
                 </div>);
         
         case 2:
-        return (<div className="client-general">{this.renderOptions()}</div>);
+        return (<div className="client-general">
+                  {this.renderOptions()}
+                  <Footer />
+                </div>);
 
         default:
-        return (<div className="client-general">{this.state.question}</div>);
+        return (<div className="client-general">
+                  {this.state.question}
+                  <Footer />
+                </div>);
    
 		}
 

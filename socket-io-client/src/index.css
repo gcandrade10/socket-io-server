@@ -8,17 +8,26 @@
   --sec-text-secondary: #757575;
 }
 
+html {
+  height: 100%;
+  font-family: 'Hind', sans-serif;
+}
+
 body {
-  font-family: sans-serif;
+  height: 100%;
   background-color: black;
   color: #FFFFFF;
   text-align: center;
 }
-
+#root {
+  height: 100%;
+}
+main {
+  height: 100%;
+}
 /**CLIENTE**/
 body .client-general{
-  width: stretch;
-  height: stretch;
+  height: 100%;
   background-image: url("./admin/background-right.png"),
                     url("./admin/background-left.png"),
                     url("./client/background.png");
@@ -28,9 +37,7 @@ body .client-general{
   background-position: right,
       left,
       center;
-  background-size: 100%,
-  100%,
-  cover;
+  background-size: 100%, 100%, cover;
   text-align: center;
 }
 
@@ -88,10 +95,23 @@ body .client-general{
   padding: 5%;
 }
 
+.option {
+  background-color: var(--accent-color);
+  font-size: 5vh;
+  color: white;
+}
+
+.closed-question {
+  padding-top: 20%;
+  padding-bottom: 10%;
+  width: 70%;
+  margin: 0px auto;
+  background-color:rgb(57, 65, 140, 0.7);
+}
+
 /**ADMINISTRADOR**/
 body .admin-general {
-  width: stretch;
-  height: stretch;
+  height: 100%;
   background-image: url("./admin/background-right.png"),
                     url("./admin/background-left.png"),
                     url("./admin/background.png");
@@ -102,8 +122,8 @@ body .admin-general {
       left,
       center;
   background-size: 100%,
-  100%,
-  100%;
+      100%,
+      cover;
   text-align: center;
 }
 
@@ -116,10 +136,9 @@ body .admin-general {
   background-color:rgba(0, 0, 0, 0.7);
 }
 
-.admin-general .waiting h1{
+.waiting h1{
   font-size: 10vw;
-  font-family: 'Hind', sans-serif;
-  font-style: bold;
+  font-weight: bold;
 }
 	
 .start-game{
@@ -146,3 +165,17 @@ body .admin-general {
 	margin: auto 0;
 }
 
+.footer {
+  background-color: var(--accent-color);
+  margin-right: 10%;
+  margin-left: 10%;
+  padding-top: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 5%;
+  position: fixed;
+}
+
+.details {
+  padding-bottom: 1%;
+}

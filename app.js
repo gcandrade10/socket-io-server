@@ -75,6 +75,6 @@ app.get("/api/reset", (req, res) =>
 app.get("/api/play", (req, res) => 
 {
   console.log("play");
-  var question = {text:"¿Cuál es el valor?", abierta:false, op1:"opción1", op2:"opción2", op3:"opción3", op4:"opción4"};
+  var question = {text:"¿Cuál es el valor?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
   emit("question",question);
 });
