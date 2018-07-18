@@ -148,12 +148,11 @@ body .admin-general {
   margin-top: 5%;
   padding-left: 10%;
   padding-right: 10%;
+  margin-bottom: 10%;
   font-style: bold;
   font-family: 'Hind', sans-serif;
   box-shadow: 5px 5px 3px rgb(10,10,10);
 }
-
-
 
 .form-fields{
 	text-align: left;
@@ -161,8 +160,48 @@ body .admin-general {
 	margin-right: 10%;
 }
 
+.players-list{
+  width: 80%;
+  margin: 0px auto;
+  background-color:rgb(57, 65, 140, 0.7);
+}
+
+.list-group{
+  background-color: transparent;
+  border-top: 0 none;
+}
+
+.list-group-item{
+  background-color: transparent;
+}
+
+.player{
+  width: 60%;
+  margin: 0px auto;
+  font-size: 4vw;
+}
+
+.player-name{
+  font-weight: bold;
+  font-style: bold;
+}
+
+.players{
+  font-size: 15vh;
+  font-weight: bold;
+  font-style: bold;
+}
+
+.timer {
+  color: yellow;
+  font-size: 15vh;
+  font-weight: bold;
+  font-style: bold;
+}
+
 .loading-icon{
-	margin: auto 0;
+  margin: auto 0;
+  max-height: 100px;
 }
 
 .footer {

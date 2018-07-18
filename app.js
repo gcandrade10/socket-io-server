@@ -15,6 +15,7 @@ let cerradas=0;
 let abiertas=0;
 let activeGame=false;
 
+
 io.on("connection", socket => {
   
   console.log("New client connected");
@@ -75,6 +76,6 @@ app.get("/api/reset", (req, res) =>
 app.get("/api/play", (req, res) => 
 {
   console.log("play");
-  var question = {text:"¿Cuál es el valor?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
+  var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
   emit("question",question);
 });

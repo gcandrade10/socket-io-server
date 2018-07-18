@@ -58,32 +58,36 @@ class Admin extends Component {
 
   renderUsers()
   {
-    return<div>
-        <ol>
+    return<div className="players-list container">
+        <h1 className="players">
+          <bold>Jugadores</bold>
+        </h1>
             
           {this.state.response.map(
             (f)=>
-            <li key={f.codigo+f.nombre}> 
-
-              <div class="linea">
-                <div class="col-lg-4">{f.nombre}</div>
-                <div class="col-lg-6">{f.correo}</div>
-                <div class="col-lg-6">{f.codigo}</div>
+            <div className="row player" key={f.nombre}>
+              <img className="col-sm-4 img-responsive" 
+                src="./login_icon.png"
+                alt="login icon" />
+              <div className="col-sm-8">
+                <h2 className="player-name">
+                  <bold>Jugador - {f.nombre}</bold>
+                </h2>
               </div>
-            </li>
+            </div>
             )
           }
-        </ol>
-        <button type="button"
-              onClick= {() =>{
-                  this.setState({
+          <br />
+        <button 
+          className="btn start-game"
+          type="button"
+          onClick= {() =>{
+            this.setState({
             step :1
           });
           fetch("/api/play");
-
-
-                }}
-            >Play
+          }}
+            >Jugar
         </button>
       </div>
   }
@@ -124,11 +128,11 @@ class Admin extends Component {
       case 2:
       return (
         <div className="admin-general">
-          <div>
+          <div className="timer">
             {this.state.time}
           </div>
           <br/>
-          <div>
+          <div className="question">
             {this.state.question.text}
           </div>
           <Footer />
