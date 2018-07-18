@@ -128,12 +128,15 @@ class Admin extends Component {
       case 2:
       return (
         <div className="admin-general">
-          <div className="timer">
-            {this.state.time}
-          </div>
-          <br/>
-          <div className="question">
-            {this.state.question.text}
+          <div className="admin-question">
+            <div className="timer">
+              {this.state.time}
+            </div>
+            <br/>
+            <div className="question">
+              <h1>{this.state.question.text}</h1>
+            </div>
+            
           </div>
           <Footer />
         </div>);
