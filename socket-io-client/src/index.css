@@ -109,6 +109,23 @@ body .client-general{
   background-color:rgb(57, 65, 140, 0.7);
 }
 
+.open-question {
+  padding-bottom: 10%;
+  padding-top: 10%;
+  width: 70%;
+  margin: 0px auto;
+  background-color:rgb(57, 65, 140, 0.7);
+}
+
+.open-question h1 {
+  font-size: 8vh;
+  padding-bottom: 10%;
+  font-weight: bold;
+  font-style: bold;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
 /**ADMINISTRADOR**/
 body .admin-general {
   height: 100%;
@@ -137,6 +154,18 @@ body .admin-general {
 }
 
 .waiting h1{
+  font-size: 10vw;
+  font-weight: bold;
+}
+
+.admin-question h1{
+  font-size: 5vw;
+  font-weight: bold;
+}
+
+
+.admin-question h3 {
+  color: #FFD300;
   font-size: 10vw;
   font-weight: bold;
 }
@@ -187,7 +216,7 @@ body .admin-general {
 }
 
 .players{
-  font-size: 15vh;
+  font-size: 12vh;
   font-weight: bold;
   font-style: bold;
 }

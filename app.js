@@ -20,7 +20,6 @@ io.on("connection", socket => {
   
   console.log("New client connected");
   clients.push(socket);
-
   socket.on("disconnect", () => console.log("Client disconnected"));
 
   socket.on("Registro", data => {
@@ -40,10 +39,16 @@ io.on("connection", socket => {
   socket.on("EntradaBD", data => {
     console.log("guardando en bd "+data);
     abiertas++;
+    console.log("abiertas",abiertas);
+    console.log("clientes",clientsInfo.length);
     if(abiertas===clientsInfo.length)
     {
-      emit("bienvenida","el juego terminó, gracias por participar");
+      emit("end","Te damos la bienvenida y te invitamos a vivir diariamente los valores Uniandes.");
       activeGame=false;
+      console.log("bienvenida");
+      abiertas=0;
+      clients=[];
+      clientsInfo=[];
     }
   });
   
@@ -72,6 +77,8 @@ app.get("/api/reset", (req, res) =>
   activeGame=true;
   console.log(clients.length+" "+clientsInfo.length);
   res.send("ok");
+  emit("start","");
+  console.log("start");
 });
 app.get("/api/play", (req, res) => 
 {

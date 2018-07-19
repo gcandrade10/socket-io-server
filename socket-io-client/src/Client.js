@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 import swal from 'sweetalert';
 import './client.css';
 import Footer from './Footer.js';
+import Header from './Header.js';
 
 class Client extends Component {
   constructor() {
@@ -50,13 +51,16 @@ class Client extends Component {
 	this.info.cerrada=this.state.cerrada;
 	this.socket.emit("EntradaBD", this.info);
   	swal("Respuesta enviada", "success");
-
+      this.setState({ step : 3});
+    
   }
 
   sendCerrada()
   {
-  	this.socket.emit("cerrada", 1);
+      this.setState({ step :3});
+    this.socket.emit("cerrada", 1);
   	swal("Respuesta enviada", "success");
+   
   }
 
   componentDidMount()
@@ -75,6 +79,15 @@ class Client extends Component {
     	this.setState({ step : 2, question:data })
     	}	
     );
+
+    this.socket.on("start", data => {
+      this.setState({ step : 0});
+      } 
+    );
+    this.socket.on("end", data => {
+      this.setState({ step : -3});
+      } 
+    );
   }
 
   renderOptions()
@@ -82,13 +95,28 @@ class Client extends Component {
   	if(this.state.question.abierta)
   	{
   		return (
-	       <form onSubmit={this.handleSubmitFinal}>
-	        <label>
-	          Nombre:
-	          <input type="text" value={this.state.abierta} onChange={this.handleChangeAbierta} />         
-	        </label>
-	        <input type="submit" value="Submit" />
-	      </form>
+        <div className="open-question">
+           <h1>Responde</h1>
+  	       <form 
+            className="form-open"
+            onSubmit={this.handleSubmitFinal}>
+             <div className="form-group">	        
+  	           <textarea 
+                placeholder="Escribe aquí..."
+                className="form-control"
+                value={this.state.abierta} 
+                onChange={this.handleChangeAbierta}
+                rows="7"
+                />          
+  	         </div>
+             <button 
+              className="btn subscribe"
+              type="submit" 
+              value="Sumbit">
+              Enviar
+              </button>
+  	       </form>
+        </div>
 		);
   	}
   	else
@@ -165,11 +193,7 @@ class Client extends Component {
     	case 0:
         return (
         <div className="client-general">
-        <div className="header">
-                    <img className="image-banner"
-                          src="./uniandes.png"
-                          alt="uniandes logo" />
-        </div>
+        <Header />
         <div className="login-form">
           <div className="row row-title">
             <h1>Para iniciar, identifícate</h1>
@@ -211,11 +235,7 @@ class Client extends Component {
 		);
         case 1:
         return (<div className="client-general">
-                  <div className="header">
-                    <img className="image-banner"
-                          src="./uniandes.png"
-                          alt="uniandes logo"/>
-                  </div>
+                  <Header />
                   <div className="waiting">
                   <h1><bold>Espera mientras se registran los demás jugadores</bold></h1>
                   </div>
@@ -224,12 +244,45 @@ class Client extends Component {
         
         case 2:
         return (<div className="client-general">
+                  <Header />
                   {this.renderOptions()}
                   <Footer />
                 </div>);
-
+        case -1:
+        return (
+            <div className="client-general">
+                  <Header />
+                  <div className="admin-question">
+                    <h3>¡Gracias!</h3>
+                  <h1>{this.state.question}</h1>
+                  </div>
+                  <Footer />
+            </div>
+          );
+        case -3:
+        return (
+            <div className="client-general">
+                  <Header />
+                  <div className="waiting">
+                    <h1>Aun no hay un juego para unirse</h1>
+                 
+                  </div>
+                  <Footer />
+            </div>
+          );
+        case 3:
+        return (
+            <div className="client-general">
+                  <Header />
+                  <div className="waiting">
+                  <h1><strong>Espera mientras terminan los demás jugadores</strong></h1>
+                  </div>
+                  <Footer />
+            </div>
+          );
         default:
         return (<div className="client-general">
+                  <Header />
                   {this.state.question}
                   <Footer />
                 </div>);
