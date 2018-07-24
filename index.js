@@ -16,23 +16,31 @@ let cerradas=0;
 let abiertas=0;
 let activeGame=false;
 
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
-var whitelist = ['https://afternoon-depths-66584.herokuapp.com'];
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
     }
-  }
-}
+    else {
+      next();
+    }
+};
 
-app.options('*', cors());
+app.configure(function () {
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(allowCrossDomain);
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
-app.get('*',cors(corsOptions), (req, res) => {
+app.get('*', (req, res) => {
   console.log(__dirname,'entro aca');
   res.sendFile(path.join(__dirname+'/socket-io-client/build/index.html'));
 });
