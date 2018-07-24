@@ -89,7 +89,7 @@ socket.on("question1", data => {
     if(cerradas===clientsInfo.length)
     {      
       var question = {text:"Arroja una pelota en el cilindro con el valor que elegiste."};
-      emit("question2",question);    
+      io.emit("question2",question);    
       cerradas=0;    
     }
   });
@@ -99,7 +99,7 @@ socket.on("question2", data => {
     if(cerradas===clientsInfo.length)
     {
       var question = {text:"¿Cómo definirías ese valor?"};
-      emit("question3",question);
+      io.emit("question3",question);
     }
   });
 //From state 4 to 5
@@ -107,7 +107,7 @@ socket.on("save", data => {
     abiertas++;
     if(abiertas>=clientsInfo.length)
     {
-      emit("final",clientsInfo);
+      io.emit("final",clientsInfo);
       activeGame=false;
       abiertas=0;
       cerradas=0;
@@ -135,7 +135,7 @@ app.get("/api/play", (req, res) =>
 {
   console.log("play");
   var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
-  emit("question1",question);
+  io.emit("question1",question);
   res.send("ok");
 });
 
