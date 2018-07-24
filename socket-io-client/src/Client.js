@@ -74,6 +74,11 @@ class Client extends Component {
   	const { endpoint } = this.state;
     this.socket= socketIOClient(endpoint);
     
+    this.socket.on("start", data => {
+      this.setState({ step : 0});
+      } 
+    );
+
     this.socket.on("question1", data => {
         console.log(data);
         this.setState({ step : 2, question:data })
@@ -93,22 +98,7 @@ class Client extends Component {
     	console.log(data);
     	this.setState({ step : 0, question:data })
     	}	
-    );
-
-    this.socket.on("question", data => {
-      console.log(data);
-      this.setState({ step : 2, question:data })
-      } 
-    );
-
-    this.socket.on("start", data => {
-      this.setState({ step : 0});
-      } 
-    );
-    this.socket.on("end", data => {
-      this.setState({ step : -3});
-      } 
-    );
+    ); 
   }
 
   renderOptionsClosed(){
