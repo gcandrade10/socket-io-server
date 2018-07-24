@@ -15,11 +15,6 @@ let cerradas=0;
 let abiertas=0;
 let activeGame=false;
 
-app.listen(port);
-
-console.log(`Password generator listening on ${port}`);
-
-
 io.on("connection", socket => {
   
   console.log("New client connected");
