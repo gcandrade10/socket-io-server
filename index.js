@@ -8,7 +8,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
 const path = require('path');
-var cors = require('cors')
+var cors = require('cors'):
+var bodyParser = require('body-parser');
 
 let clients=[];
 let clientsInfo=[];
@@ -30,8 +31,7 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
+  app.use(bodyParser);
   app.use(app.router);
   app.use(allowCrossDomain);
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
