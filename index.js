@@ -19,7 +19,7 @@ let activeGame=false;
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(path.join(__dirname+'/socket-io-client/build/index.html'));
 });
 
 io.on("connection", socket => {
