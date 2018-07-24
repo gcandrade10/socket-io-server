@@ -4,6 +4,8 @@ import swal from 'sweetalert';
 import './client.css';
 import Footer from './Footer.js';
 import Header from './Header.js';
+let Timer = require('easytimer');
+let timerInstance = new Timer();
 
 class Client extends Component {
   constructor() {
@@ -27,6 +29,16 @@ class Client extends Component {
     
   }
 
+  startTimer() {
+    setInterval(this.update.bind(this), 1000);
+  }
+
+  update() {
+    this.setState({
+      time :timerInstance.getTimeValues().toString()
+    });
+  }
+
   handleChangeNombre(event) {
     this.setState({nombre: event.target.value});
   }
@@ -47,13 +59,17 @@ class Client extends Component {
 
   handleSubmitFinal(event) {
 	event.preventDefault();
+  this.setState({ step : 5});
 	this.info.abierta=this.state.abierta;
 	this.info.cerrada=this.state.cerrada;
-  //agregar tiempo
+  console.log(timerInstance.getTimeValues().toString());
+  this.setState({
+    time :timerInstance.getTimeValues().toString()
+  });
+  this.info.tiempo=this.state.time;
 	this.socket.emit("save", this.info);
 	swal("Respuesta enviada", "success");
-  this.setState({ step : 5});
-    
+  
   }
 
   sendCerrada()
@@ -82,6 +98,9 @@ class Client extends Component {
     this.socket.on("question1", data => {
         console.log(data);
         this.setState({ step : 2, question:data })
+        timerInstance = new Timer();
+        timerInstance.start();
+        this.startTimer();
     });
 
     this.socket.on("question2", data => {
@@ -94,10 +113,10 @@ class Client extends Component {
         this.setState({ step : 4, question:data })
     });
 
-    this.socket.on("bienvenida", data => {
-    	console.log(data);
-    	this.setState({ step : 0, question:data })
-    	}	
+    this.socket.on("beggining", data => {
+      console.log("entro aca a beggining");
+      this.setState({ step : 0 })
+      } 
     ); 
   }
 
@@ -114,7 +133,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
               }}
-            ><bold>a. {this.state.question.op1}</bold>
+            ><strong>a. {this.state.question.op1}</strong>
             </button>
             <button 
               className="btn option col-sm-6 form-group"
@@ -125,7 +144,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><bold>c. {this.state.question.op2}</bold>
+            ><strong>c. {this.state.question.op2}</strong>
             </button>
           </div>
           <div className="row">
@@ -138,7 +157,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><bold>b. {this.state.question.op3}</bold>
+            ><strong>b. {this.state.question.op3}</strong>
             </button>
 
             <button 
@@ -150,7 +169,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><bold>d. {this.state.question.op4}</bold>
+            ><strong>d. {this.state.question.op4}</strong>
             </button>
            </div>
       </div>);
@@ -198,6 +217,7 @@ class Client extends Component {
 
   render() {
 
+      console.log("step",this.state.step);
     	switch (this.state.step) {
     	case 0:
         return (
@@ -261,7 +281,7 @@ class Client extends Component {
         return (<div className="client-general">
                   <Header />
                   <div className="admin-question">
-                  <h1><bold>¿Lo lograste?</bold></h1>
+                  <h1><strong>¿Lo lograste?</strong></h1>
                   <br />
                   <button 
                     className="btn continue"
@@ -271,7 +291,7 @@ class Client extends Component {
                   </div>
                   <Footer />
                 </div>);
-        case 2:
+        case 4:
         return (<div className="client-general">
                   <Header />
                   {this.renderOptions()}

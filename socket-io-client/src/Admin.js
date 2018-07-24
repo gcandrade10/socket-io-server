@@ -3,8 +3,7 @@ import socketIOClient from "socket.io-client";
 import './admin.css';
 import Footer from './Footer.js';
 
-let Timer = require('easytimer');
-let timerInstance = new Timer();
+
 
 class Admin extends Component {
   constructor() {
@@ -17,66 +16,29 @@ class Admin extends Component {
     };
   }
 
-
-  startTimer()
-  {
-    setInterval(this.update.bind(this), 1000);
-  }
-
-  update()
-  {
-    console.log(timerInstance.getTimeValues().toString());
-    this.setState({
-      time :timerInstance.getTimeValues().toString()
-    });
-  }
-
-
-
   componentDidMount() {
     const { endpoint } = this.state;
     this.socket= socketIOClient(endpoint);
 
     this.socket.on("question1", data => {
       this.setState({ step : 2, question:data })
-      //timerInstance = new Timer();
-      //timerInstance.start();
-      //this.startTimer();
     });
 
     this.socket.on("question2", data => {
       this.setState({ step : 4, question:data })
-      //timerInstance = new Timer();
-      //timerInstance.start();
-      //this.startTimer();
     });
 
     this.socket.on("question3", data => {
       this.setState({ step : 5, question:data })
-      //timerInstance = new Timer();
-      //timerInstance.start();
-      //this.startTimer();
     });
 
     this.socket.on("clients", data => {
-    	console.log(data);
     	this.setState({ response: data })
     });
 
-    this.socket.on("question", data => {
-      console.log(data);
-      this.setState({ step : 2, question:data })
-      console.log("empieza el tiempo");
-      timerInstance = new Timer();
-      timerInstance.start();
-      this.startTimer();
-    });
-
-    this.socket.on("bienvenida", data => {
-      console.log(data);
-      this.setState({ step : 0, question:data })
-      } 
-    );
+    this.socket.on("final", info => {
+      this.setState({ step : 6 })
+    }); 
   }
 
   renderUsers()
@@ -113,7 +75,7 @@ class Admin extends Component {
   }
 
   render() {
-
+    console.log("step",this.state.step);
     switch (this.state.step) {
       case 0:
         return (
@@ -122,9 +84,9 @@ class Admin extends Component {
               className="btn start-game"
               onClick= {() =>{
                   this.setState({
-                    step :1
+                    step :1,
                   });
-              fetch("/api/reset");
+              fetch("/api/reset",{cache: "no-cache"});
               }}>
               Nuevo juego
             </button>
@@ -174,6 +136,27 @@ class Admin extends Component {
           <div className="admin-question">
             <div className="question">
               <h1>{this.state.question.text}</h1>
+            </div>            
+          </div>
+          <Footer />
+        </div>);
+
+      case 6:
+      return (
+        <div className="admin-general">
+          <div className="admin-question">
+            <div className="question">
+              <h1>Scoreboard</h1>
+              <button type="button"
+              className="btn start-game"
+              onClick= {() =>{
+                  this.setState({
+                    step :1
+                  });
+              fetch("/api/reset",{cache: "no-cache"});
+              }}>
+              Nuevo juego
+            </button>
             </div>            
           </div>
           <Footer />

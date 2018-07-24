@@ -9,6 +9,32 @@ const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
 const path = require('path');
 var cors = require('cors');
+const MongoClient = require('mongodb').MongoClient;
+
+var username = process.env.USERNAMEMONGO || 'alejandro';
+var password = process.env.PASSWORD || 'basededatos1';
+
+const MONGO_URL = 'mongodb://'+username+':'+password+'@ds245901.mlab.com:45901/bienvenida';
+console.log(MONGO_URL);
+MongoClient.connect(MONGO_URL, (err, database) => {  
+  if (err) {
+    return console.log(err);
+  }
+  const db = database.db('bienvenida');
+  var collection = db.collection('usuarios');
+  // Do something with db here, like inserting a record
+  collection.insertOne(
+    {
+      title: 'Hello MongoDB',
+      text: 'Hopefully this works!'
+    },
+     (err, res, db) => {
+      if (err) {
+        return console.log(err);
+      }
+    }
+  )
+});
 
 let clients=[];
 let clientsInfo=[];
@@ -53,7 +79,6 @@ io.on("connection", socket => {
 **/
 //From state 0 to state 1
   socket.on("Register", data => {
-    console.log(data);
     clientsInfo.push(data);
     emit("clients",clientsInfo);
   });
@@ -79,8 +104,9 @@ socket.on("question2", data => {
 //From state 4 to 5
 socket.on("save", data => {
     abiertas++;
-    if(abiertas===clientsInfo.length)
+    if(abiertas>=clientsInfo.length)
     {
+      emit("final",clientsInfo);
       activeGame=false;
       abiertas=0;
       cerradas=0;
@@ -94,21 +120,17 @@ socket.on("save", data => {
 //From state 0 to state 1
 app.get("/api/reset", (req, res) => 
 {
-  var origin = req.get('origin'); 
-     res.header('Access-Control-Allow-Origin', origin);
-     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-     res.header('Access-Control-Allow-Headers', 'Content-Type');
-  clientsInfo=[];
-  cerradas=0;
+  console.log("reset");
   activeGame=true;
+  abiertas=0;
+  cerradas=0;
+  clients=[];
+  clientsInfo=[];
+  emit("beggining",[]);
 });
 //From state 1 to 2
 app.get("/api/play", (req, res) => 
 {
-  var origin = req.get('origin'); 
-     res.header('Access-Control-Allow-Origin', origin);
-     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-     res.header('Access-Control-Allow-Headers', 'Content-Type');
   console.log("play");
   var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
   emit("question1",question);
@@ -116,7 +138,6 @@ app.get("/api/play", (req, res) =>
 
 const emit= (key,newValue)=>
 {
-	console.log(clients.length);
 	for (i = 0; i < clients.length; i++) {
 		clients[i].emit(key, newValue);
 	}
