@@ -11,7 +11,7 @@ class Admin extends Component {
     super();
     this.state = {
       response: false,
-      endpoint: "https://afternoon-depths-66584.herokuapp.com/",
+      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
       step:0
     };
   }
