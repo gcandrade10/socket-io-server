@@ -10,8 +10,8 @@ class Client extends Component {
     super();
     this.state = {
       response: false,
-      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      endpoint: "https://afternoon-depths-66584.herokuapp.com",
+      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      //endpoint: "https://afternoon-depths-66584.herokuapp.com",
       nombre: "",
       codigo: "",
       step:0
@@ -22,6 +22,8 @@ class Client extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitFinal = this.handleSubmitFinal.bind(this);
     this.renderName = this.renderName.bind(this);
+    this.renderOptionsClosed = this.renderOptionsClosed.bind(this);
+    this.sendQuestion2 = this.sendQuestion2.bind(this);
     
   }
 
@@ -36,32 +38,35 @@ class Client extends Component {
   }
 
   handleSubmit(event) {
-    
-    this.info = {nombre:this.state.nombre, codigo:this.state.codigo};
-	this.socket.emit("Registro", this.info);
-
+  event.preventDefault();
+  this.info = {nombre:this.state.nombre, codigo:this.state.codigo};
+	this.socket.emit("Register", this.info);
 	this.setState({step: 1});
-  
-    event.preventDefault();
-    swal("Registro exitoso!", "Felicidades " + this.state.nombre + ". Te has registrado exitosamente!", "success");
+  swal("Registro exitoso!", "Felicidades " + this.state.nombre + ". Te has registrado exitosamente!", "success");
   }
 
   handleSubmitFinal(event) {
 	event.preventDefault();
 	this.info.abierta=this.state.abierta;
 	this.info.cerrada=this.state.cerrada;
-	this.socket.emit("EntradaBD", this.info);
-  	swal("Respuesta enviada", "success");
-      this.setState({ step : 3});
+  //agregar tiempo
+	this.socket.emit("save", this.info);
+	swal("Respuesta enviada", "success");
+  this.setState({ step : 5});
     
   }
 
   sendCerrada()
   {
-      this.setState({ step :3});
-    this.socket.emit("cerrada", 1);
-  	swal("Respuesta enviada", "success");
-   
+    this.setState({ step :6});
+    this.socket.emit("question1", 1);
+  	swal("Respuesta enviada", "Success");
+  }
+
+  sendQuestion2(){
+    this.setState({ step :6});
+    this.socket.emit("question2", 1);
+    swal("Respuesta enviada", "Success");
   }
 
   componentDidMount()
@@ -69,6 +74,21 @@ class Client extends Component {
   	const { endpoint } = this.state;
     this.socket= socketIOClient(endpoint);
     
+    this.socket.on("question1", data => {
+        console.log(data);
+        this.setState({ step : 2, question:data })
+    });
+
+    this.socket.on("question2", data => {
+        console.log(data);
+        this.setState({ step : 3, question:data })
+    });
+
+    this.socket.on("question3", data => {
+        console.log(data);
+        this.setState({ step : 4, question:data })
+    });
+
     this.socket.on("bienvenida", data => {
     	console.log(data);
     	this.setState({ step : 0, question:data })
@@ -76,9 +96,9 @@ class Client extends Component {
     );
 
     this.socket.on("question", data => {
-    	console.log(data);
-    	this.setState({ step : 2, question:data })
-    	}	
+      console.log(data);
+      this.setState({ step : 2, question:data })
+      } 
     );
 
     this.socket.on("start", data => {
@@ -91,10 +111,64 @@ class Client extends Component {
     );
   }
 
+  renderOptionsClosed(){
+    return (
+        <div className="container closed-question">
+          <div className="row"> 
+            <button 
+              className="btn option col-sm-6 form-group"
+              type="button"
+              onClick = {() =>{
+                  this.setState({
+                   cerrada :this.state.question.op1
+                  });
+                  this.sendCerrada();
+              }}
+            ><bold>a. {this.state.question.op1}</bold>
+            </button>
+            <button 
+              className="btn option col-sm-6 form-group"
+              type="button"
+              onClick= {() =>{
+                  this.setState({
+                  cerrada :this.state.question.op2
+                  });
+                  this.sendCerrada();
+                }}
+            ><bold>c. {this.state.question.op2}</bold>
+            </button>
+          </div>
+          <div className="row">
+            <button 
+              className="btn option col-sm-6 pl-1 pr-1"
+              type="button"
+              onClick= {() =>{
+                  this.setState({
+                  cerrada :this.state.question.op3
+                  });
+                  this.sendCerrada();
+                }}
+            ><bold>b. {this.state.question.op3}</bold>
+            </button>
+
+            <button 
+              className="btn option col-sm-6 ml-1 mr-1"
+              type="button"
+              onClick= {() =>{
+                  this.setState({
+                  cerrada :this.state.question.op4
+                  });
+                  this.sendCerrada();
+                }}
+            ><bold>d. {this.state.question.op4}</bold>
+            </button>
+           </div>
+      </div>);
+    
+  }
+
   renderOptions()
   {
-  	if(this.state.question.abierta)
-  	{
   		return (
         <div className="open-question">
            <h1>Responde</h1>
@@ -119,62 +193,6 @@ class Client extends Component {
   	       </form>
         </div>
 		);
-  	}
-  	else
-  	{
-  		return (
-        <div className="container closed-question">
-          <div className="row"> 
-      		  <button 
-              className="btn option col-sm-6 form-group"
-              type="button"
-            	onClick = {() =>{
-                	this.setState({
-                	 cerrada :"Libertad"
-              		});
-              		this.sendCerrada();
-              }}
-            ><bold>a. Libertad</bold>
-            </button>
-            <button 
-              className="btn option col-sm-6 form-group"
-              type="button"
-            	onClick= {() =>{
-                	this.setState({
-                	cerrada :"Excelencia"
-              		});
-              		this.sendCerrada();
-                }}
-            ><bold>c. Excelencia</bold>
-            </button>
-          </div>
-          <div className="row">
-            <button 
-              className="btn option col-sm-6 pl-1 pr-1"
-              type="button"
-            	onClick= {() =>{
-                	this.setState({
-                	cerrada :"Solidaridad"
-              		});
-              		this.sendCerrada();
-                }}
-            ><bold>b. Solidaridad</bold>
-            </button>
-
-            <button 
-              className="btn option col-sm-6 ml-1 mr-1"
-              type="button"
-            	onClick= {() =>{
-                	this.setState({
-                	cerrada :"Integridad"
-              		});
-              		this.sendCerrada();
-                }}
-            ><bold>d. Integridad</bold>
-            </button>
-  			   </div>
-  		</div>);
-  	}
   }
 
   renderName(username) {
@@ -238,7 +256,7 @@ class Client extends Component {
         return (<div className="client-general">
                   <Header />
                   <div className="waiting">
-                  <h1><bold>Espera mientras se registran los demás jugadores</bold></h1>
+                  <h1><strong>Espera mientras se registran los demás jugadores</strong></h1>
                   </div>
                   <Footer />
                 </div>);
@@ -246,32 +264,41 @@ class Client extends Component {
         case 2:
         return (<div className="client-general">
                   <Header />
+                  {this.renderOptionsClosed()}
+                  <Footer />
+                </div>);
+        case 3:
+        return (<div className="client-general">
+                  <Header />
+                  <div className="admin-question">
+                  <h1><bold>¿Lo lograste?</bold></h1>
+                  <br />
+                  <button 
+                    className="btn continue"
+                    onClick= {() =>{
+                      this.sendQuestion2();
+                  }}>Continúa</button>
+                  </div>
+                  <Footer />
+                </div>);
+        case 2:
+        return (<div className="client-general">
+                  <Header />
                   {this.renderOptions()}
                   <Footer />
                 </div>);
-        case -1:
+        case 5:
         return (
             <div className="client-general">
                   <Header />
                   <div className="admin-question">
                     <h3>¡Gracias!</h3>
-                  <h1>{this.state.question}</h1>
+                  <h1>Te damos la bienvenida y te invitamos a vivir diariamente los valores Uniandes.</h1>
                   </div>
                   <Footer />
             </div>
           );
-        case -3:
-        return (
-            <div className="client-general">
-                  <Header />
-                  <div className="waiting">
-                    <h1>Aun no hay un juego para unirse</h1>
-                 
-                  </div>
-                  <Footer />
-            </div>
-          );
-        case 3:
+        case 6:
         return (
             <div className="client-general">
                   <Header />
@@ -284,7 +311,7 @@ class Client extends Component {
         default:
         return (<div className="client-general">
                   <Header />
-                  {this.state.question}
+                  Error
                   <Footer />
                 </div>);
    

@@ -11,8 +11,8 @@ class Admin extends Component {
     super();
     this.state = {
       response: false,
-      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      endpoint: "https://afternoon-depths-66584.herokuapp.com",
+      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      //endpoint: "https://afternoon-depths-66584.herokuapp.com",
       step:0
     };
   }
@@ -36,6 +36,28 @@ class Admin extends Component {
   componentDidMount() {
     const { endpoint } = this.state;
     this.socket= socketIOClient(endpoint);
+
+    this.socket.on("question1", data => {
+      this.setState({ step : 2, question:data })
+      //timerInstance = new Timer();
+      //timerInstance.start();
+      //this.startTimer();
+    });
+
+    this.socket.on("question2", data => {
+      this.setState({ step : 4, question:data })
+      //timerInstance = new Timer();
+      //timerInstance.start();
+      //this.startTimer();
+    });
+
+    this.socket.on("question3", data => {
+      this.setState({ step : 5, question:data })
+      //timerInstance = new Timer();
+      //timerInstance.start();
+      //this.startTimer();
+    });
+
     this.socket.on("clients", data => {
     	console.log(data);
     	this.setState({ response: data })
@@ -83,9 +105,6 @@ class Admin extends Component {
           className="btn start-game"
           type="button"
           onClick= {() =>{
-            this.setState({
-            step :1
-          });
           fetch("/api/play");
           }}
             >Jugar
@@ -130,14 +149,32 @@ class Admin extends Component {
       return (
         <div className="admin-general">
           <div className="admin-question">
-            <div className="timer">
-              {this.state.time}
-            </div>
-            <br/>
             <div className="question">
               <h1>{this.state.question.text}</h1>
             </div>
             
+          </div>
+          <Footer />
+        </div>);
+
+      case 4:
+      return (
+        <div className="admin-general">
+          <div className="admin-question">
+            <div className="question">
+              <h1>{this.state.question.text}</h1>
+            </div>            
+          </div>
+          <Footer />
+        </div>);
+
+      case 5:
+      return (
+        <div className="admin-general">
+          <div className="admin-question">
+            <div className="question">
+              <h1>{this.state.question.text}</h1>
+            </div>            
           </div>
           <Footer />
         </div>);

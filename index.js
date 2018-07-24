@@ -33,52 +33,85 @@ var allowCrossDomain = function(req, res, next) {
   app.use(allowCrossDomain);
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
-
+/**
 app.get('*', (req, res) => {
   console.log(__dirname,'entro aca');
   res.sendFile(path.join(__dirname+'/socket-io-client/build/index.html'));
 });
+**/
 
 io.on("connection", socket => {
   
   console.log("New client connected");
+
   clients.push(socket);
+
   socket.on("disconnect", () => console.log("Client disconnected"));
 
-  socket.on("Registro", data => {
+/**
+**CLIENT LINE
+**/
+//From state 0 to state 1
+  socket.on("Register", data => {
     console.log(data);
     clientsInfo.push(data);
     emit("clients",clientsInfo);
   });
-
-  socket.on("cerrada", data => {
+//From state 6 to 3
+socket.on("question1", data => {
+    cerradas++;
+    if(cerradas===clientsInfo.length)
+    {      
+      var question = {text:"Arroja una pelota en el cilindro con el valor que elegiste."};
+      emit("question2",question);    
+      cerradas=0;    
+    }
+  });
+//From state 6 to 4
+socket.on("question2", data => {
     cerradas++;
     if(cerradas===clientsInfo.length)
     {
-      var question = {text:"¿Por qué es el valor?", abierta:true};
-      emit("question",question);    }
+      var question = {text:"¿Cómo definirías ese valor?"};
+      emit("question3",question);
+    }
   });
-
-  socket.on("EntradaBD", data => {
-    console.log("guardando en bd "+data);
+//From state 4 to 5
+socket.on("save", data => {
     abiertas++;
-    console.log("abiertas",abiertas);
-    console.log("clientes",clientsInfo.length);
     if(abiertas===clientsInfo.length)
     {
-      emit("end","Te damos la bienvenida y te invitamos a vivir diariamente los valores Uniandes.");
       activeGame=false;
-      console.log("bienvenida");
       abiertas=0;
+      cerradas=0;
       clients=[];
       clientsInfo=[];
     }
   });
-  
-  if(!activeGame)
-  {
-    socket.emit("bienvenida","Aun no hay un juego para unirse");
-  }
+/**
+** ADMIN LINE
+**/
+//From state 0 to state 1
+app.get("/api/reset", (req, res) => 
+{
+  var origin = req.get('origin'); 
+     res.header('Access-Control-Allow-Origin', origin);
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header('Access-Control-Allow-Headers', 'Content-Type');
+  clientsInfo=[];
+  cerradas=0;
+  activeGame=true;
+});
+//From state 1 to 2
+app.get("/api/play", (req, res) => 
+{
+  var origin = req.get('origin'); 
+     res.header('Access-Control-Allow-Origin', origin);
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header('Access-Control-Allow-Headers', 'Content-Type');
+  console.log("play");
+  var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
+  emit("question1",question);
 });
 
 const emit= (key,newValue)=>
@@ -89,32 +122,5 @@ const emit= (key,newValue)=>
 	}
 };
 
+});
 server.listen(port, () => console.log(`Listening on port ${port}`));
-
-// Put all API endpoints under "/api"
-app.get("/api/reset", (req, res) => 
-{
-  var origin = req.get('origin'); 
-     res.header('Access-Control-Allow-Origin', origin);
-     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-     res.header('Access-Control-Allow-Headers', 'Content-Type');
-  console.log(clients.length+" "+clientsInfo.length);
-  clientsInfo=[];
-  cerradas=0;
-  activeGame=true;
-  console.log(clients.length+" "+clientsInfo.length);
-  res.send("ok");
-  emit("start","");
-  console.log("start");
-});
-
-app.get("/api/play", (req, res) => 
-{
-  var origin = req.get('origin'); 
-     res.header('Access-Control-Allow-Origin', origin);
-     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-     res.header('Access-Control-Allow-Headers', 'Content-Type');
-  console.log("play");
-  var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
-  emit("question",question);
-});

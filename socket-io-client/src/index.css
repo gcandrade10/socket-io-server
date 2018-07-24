@@ -67,6 +67,17 @@ body .client-general{
   padding-left: 10%;
   padding-right: 10%;
 }
+
+.continue{
+  background-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: var(--text-primary);
+  font-size: 5vw;
+  margin-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 .client-general .header{
   width:100%;
   height:15vh;
