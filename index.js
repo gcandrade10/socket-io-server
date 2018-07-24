@@ -21,6 +21,7 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
+app.options('*', cors());
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
