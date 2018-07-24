@@ -15,6 +15,8 @@ let cerradas=0;
 let abiertas=0;
 let activeGame=false;
 
+app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
+
 io.on("connection", socket => {
   
   console.log("New client connected");
