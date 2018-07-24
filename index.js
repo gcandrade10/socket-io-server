@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
 const path = require('path');
-var cors = require('cors'):
+var cors = require('cors');
 var bodyParser = require('body-parser');
 
 let clients=[];
