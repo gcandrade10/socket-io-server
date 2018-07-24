@@ -16,29 +16,15 @@ let cerradas=0;
 let abiertas=0;
 let activeGame=false;
 
-app.use(cors());
+var corsOptions = {
+  origin: 'https://uniandes.herokuapp.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-app.all('*', function(req, res, next) {
-     var origin = req.get('origin'); 
-     res.header('Access-Control-Allow-Origin', origin);
-     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-     res.header('Access-Control-Allow-Headers', 'Content-Type');
-     next();
-})
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
-app.get('*', (req, res) => {
-  var origin = req.get('origin'); 
-     res.header('Access-Control-Allow-Origin', origin);
-     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-     res.header('Access-Control-Allow-Headers', 'Content-Type');
+app.get('*',cors(corsOptions), (req, res) => {
   console.log(__dirname,'entro aca');
   res.sendFile(path.join(__dirname+'/socket-io-client/build/index.html'));
 });
