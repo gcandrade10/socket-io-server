@@ -71,7 +71,7 @@ class Client extends Component {
     
     this.socket.on("bienvenida", data => {
     	console.log(data);
-    	this.setState({ step : -1, question:data })
+    	this.setState({ step : 0, question:data })
     	}	
     );
 
