@@ -56,7 +56,7 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-  app.use(allowCrossDomain);
+app.use(allowCrossDomain);
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 /**
@@ -78,10 +78,11 @@ io.on("connection", socket => {
 **CLIENT LINE
 **/
 //From state 0 to state 1
-  socket.on("Register", data => {
-    clientsInfo.push(data);
-    emit("clients",clientsInfo);
-  });
+socket.on("Register", data => {
+  clientsInfo.push(data);
+  io.emit("clients",clientsInfo);
+
+});
 //From state 6 to 3
 socket.on("question1", data => {
     cerradas++;
@@ -138,7 +139,7 @@ app.get("/api/play", (req, res) =>
   res.send("ok");
 });
 
-const emit= (key,newValue)=>
+const emit= (key,newValue) =>
 {
 	for (i = 0; i < clients.length; i++) {
 		clients[i].emit(key, newValue);
