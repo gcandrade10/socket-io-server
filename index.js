@@ -8,7 +8,6 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
 const path = require('path');
-app.use(index);
 
 let clients=[];
 let clientsInfo=[];
@@ -87,6 +86,7 @@ app.get("/api/reset", (req, res) =>
   emit("start","");
   console.log("start");
 });
+
 app.get("/api/play", (req, res) => 
 {
   console.log("play");
