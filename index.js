@@ -19,6 +19,7 @@ let activeGame=false;
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
 app.get('*', (req, res) => {
+  console.log(__dirname,'entro aca');
   res.sendFile(path.join(__dirname+'/socket-io-client/build/index.html'));
 });
 
