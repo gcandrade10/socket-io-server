@@ -16,12 +16,18 @@ let cerradas=0;
 let abiertas=0;
 let activeGame=false;
 
+
+var whitelist = ['https://afternoon-depths-66584.herokuapp.com'];
 var corsOptions = {
-  origin: 'https://uniandes.herokuapp.com',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
 }
 
-app.options('*', cors());
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
