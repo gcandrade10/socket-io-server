@@ -28,6 +28,7 @@ var corsOptions = {
   }
 }
 
+app.options('*', cors());
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
