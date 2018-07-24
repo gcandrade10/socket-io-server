@@ -35,6 +35,10 @@ app.all('*', function(req, res, next) {
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
 app.get('*', (req, res) => {
+  var origin = req.get('origin'); 
+     res.header('Access-Control-Allow-Origin', origin);
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header('Access-Control-Allow-Headers', 'Content-Type');
   console.log(__dirname,'entro aca');
   res.sendFile(path.join(__dirname+'/socket-io-client/build/index.html'));
 });
@@ -94,6 +98,10 @@ server.listen(port, () => console.log(`Listening on port ${port}`));
 // Put all API endpoints under "/api"
 app.get("/api/reset", (req, res) => 
 {
+  var origin = req.get('origin'); 
+     res.header('Access-Control-Allow-Origin', origin);
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header('Access-Control-Allow-Headers', 'Content-Type');
   console.log(clients.length+" "+clientsInfo.length);
   clientsInfo=[];
   cerradas=0;
@@ -106,6 +114,10 @@ app.get("/api/reset", (req, res) =>
 
 app.get("/api/play", (req, res) => 
 {
+  var origin = req.get('origin'); 
+     res.header('Access-Control-Allow-Origin', origin);
+     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+     res.header('Access-Control-Allow-Headers', 'Content-Type');
   console.log("play");
   var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
   emit("question",question);
