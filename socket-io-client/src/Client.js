@@ -12,8 +12,8 @@ class Client extends Component {
     super();
     this.state = {
       response: false,
-      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      //endpoint: "https://afternoon-depths-66584.herokuapp.com",
+      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      endpoint: "https://afternoon-depths-66584.herokuapp.com",
       nombre: "",
       codigo: "",
       step:0
