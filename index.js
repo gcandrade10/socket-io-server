@@ -30,13 +30,12 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-app.configure(function () {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(allowCrossDomain);
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
+
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
 
