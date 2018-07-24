@@ -126,8 +126,8 @@ app.get("/api/reset", (req, res) =>
   cerradas=0;
   clients=[];
   clientsInfo=[];
-  emit("beggining",[]);
-  return ;
+  io.emit("beggining",[]);
+  res.send("ok");
 });
 //From state 1 to 2
 app.get("/api/play", (req, res) => 
@@ -135,7 +135,7 @@ app.get("/api/play", (req, res) =>
   console.log("play");
   var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
   emit("question1",question);
-  return ;
+  res.send("ok");
 });
 
 const emit= (key,newValue)=>
