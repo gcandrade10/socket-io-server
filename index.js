@@ -9,7 +9,6 @@ const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
 const path = require('path');
 var cors = require('cors');
-var bodyParser = require('body-parser');
 
 let clients=[];
 let clientsInfo=[];
@@ -31,7 +30,6 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-  app.use(bodyParser);
   app.use(allowCrossDomain);
 
 app.use(express.static(path.join(__dirname, 'socket-io-client/build')));
