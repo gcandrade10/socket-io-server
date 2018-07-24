@@ -7,6 +7,7 @@ const index = require("./routes/inde");
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
+const path = require('path');
 app.use(index);
 
 let clients=[];
