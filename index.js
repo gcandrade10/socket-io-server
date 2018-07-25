@@ -16,28 +16,11 @@ var password = process.env.PASSWORD || 'basededatos1';
 
 const MONGO_URL = 'mongodb://'+username+':'+password+'@ds245901.mlab.com:45901/bienvenida';
 console.log(MONGO_URL);
-MongoClient.connect(MONGO_URL, (err, database) => {  
-  if (err) {
-    return console.log(err);
-  }
-  const db = database.db('bienvenida');
-  var collection = db.collection('usuarios');
-  // Do something with db here, like inserting a record
-  collection.insertOne(
-    {
-      title: 'Hello MongoDB',
-      text: 'Hopefully this works!'
-    },
-     (err, res, db) => {
-      if (err) {
-        return console.log(err);
-      }
-    }
-  )
-});
+
 
 let clients=[];
 let clientsInfo=[];
+let info=[];
 let cerradas=0;
 let abiertas=0;
 let activeGame=false;
@@ -105,14 +88,41 @@ socket.on("question2", data => {
 //From state 4 to 5
 socket.on("save", data => {
     abiertas++;
+    info.push(data);
+    var name = data.nombre;
+    var codigo = data.codigo;
+    var abierta = data.abierta;
+    var cerrada = data.cerrada;
+    var tiempo = data.tiempo;
+    console.log("data",data);
+    MongoClient.connect(MONGO_URL, (err, database, data) => {  
+      const db = database.db('bienvenida');
+      var collection = db.collection('usuarios');
+      console.log("entro a guardar");
+      collection.insertOne(
+        {
+          name : name,
+          codigo : codigo,
+          abierta : abierta,
+          cerrada : cerrada,
+          tiempo : tiempo
+        },
+         (err, res, db) => {
+          if (err) {
+            return console.log(err);
+          }
+        }
+      )
+    });
     if(abiertas>=clientsInfo.length)
     {
-      io.emit("final",clientsInfo);
+      io.emit("final",info);
       activeGame=false;
       abiertas=0;
       cerradas=0;
       clients=[];
       clientsInfo=[];
+      info=[];
     }
   });
 /**

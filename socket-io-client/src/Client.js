@@ -12,8 +12,8 @@ class Client extends Component {
     super();
     this.state = {
       response: false,
-      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      endpoint: "https://afternoon-depths-66584.herokuapp.com",
+      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      //endpoint: "https://afternoon-depths-66584.herokuapp.com",
       nombre: "",
       codigo: "",
       step:0
@@ -59,6 +59,7 @@ class Client extends Component {
 
   handleSubmitFinal(event) {
 	event.preventDefault();
+  timerInstance.stop();
   this.setState({ step : 5});
 	this.info.abierta=this.state.abierta;
 	this.info.cerrada=this.state.cerrada;
@@ -74,12 +75,14 @@ class Client extends Component {
 
   sendCerrada()
   {
+    timerInstance.pause();
     this.setState({ step :6});
     this.socket.emit("question1", 1);
   	swal("Respuesta enviada", "Success");
   }
 
   sendQuestion2(){
+    timerInstance.pause();
     this.setState({ step :6});
     this.socket.emit("question2", 1);
     swal("Respuesta enviada", "Success");
@@ -104,13 +107,17 @@ class Client extends Component {
     });
 
     this.socket.on("question2", data => {
-        console.log(data);
-        this.setState({ step : 3, question:data })
+      timerInstance.start();
+      this.startTimer();
+      console.log(data);
+      this.setState({ step : 3, question:data })
     });
 
     this.socket.on("question3", data => {
-        console.log(data);
-        this.setState({ step : 4, question:data })
+      timerInstance.start();
+      this.startTimer();
+      console.log(data);
+      this.setState({ step : 4, question:data })
     });
 
     this.socket.on("beggining", data => {

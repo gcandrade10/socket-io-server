@@ -10,10 +10,13 @@ class Admin extends Component {
     super();
     this.state = {
       response: false,
-      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
+      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      //endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
       step:0
     };
+
+    this.renderScoreboard = this.renderScoreboard.bind(this);
+
   }
 
   componentDidMount() {
@@ -37,15 +40,41 @@ class Admin extends Component {
     });
 
     this.socket.on("final", info => {
-      this.setState({ step : 6 })
+      function compare(a,b) {
+        if (a.tiempo < b.tiempo)
+          return -1;
+        if (a.tiempo > b.tiempo)
+          return 1;
+        return 0;
+      }
+      info.sort(compare);
+      this.setState({ step : 6, info: info })
     }); 
+  }
+
+
+  renderScoreboard(){
+    return <div className="players-list container">
+    {this.state.info.map(
+      (f)=> <div className="row player" key={f.nombre}>
+          <img className="col-sm-4 img-responsive" 
+            src="./login_icon.png"
+            alt="login icon" />
+          <div className="col-sm-8">
+            <h2 className="player-name">
+              {f.nombre} - {f.tiempo}
+            </h2>
+          </div>
+        </div>
+      )}
+    </div>;
   }
 
   renderUsers()
   {
-    return<div className="players-list container">
+    return <div className="players-list container">
         <h1 className="players">
-          <bold>Jugadores</bold>
+          Jugadores
         </h1>
             
           {this.state.response.map(
@@ -56,7 +85,7 @@ class Admin extends Component {
                 alt="login icon" />
               <div className="col-sm-8">
                 <h2 className="player-name">
-                  <bold>Jugador - {f.nombre}</bold>
+                  Jugador - {f.nombre}
                 </h2>
               </div>
             </div>
@@ -143,10 +172,10 @@ class Admin extends Component {
 
       case 6:
       return (
-        <div className="admin-general">
-          <div className="admin-question">
-            <div className="question">
+         <div className="admin-general"
+          style={{ textAlign: "center" }}>
               <h1>Scoreboard</h1>
+              {this.renderScoreboard()}
               <button type="button"
               className="btn start-game"
               onClick= {() =>{
@@ -157,8 +186,6 @@ class Admin extends Component {
               }}>
               Nuevo juego
             </button>
-            </div>            
-          </div>
           <Footer />
         </div>);
  
