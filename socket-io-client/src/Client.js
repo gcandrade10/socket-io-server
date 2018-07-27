@@ -11,8 +11,8 @@ class Client extends Component {
     super();
     this.state = {
       response: false,
-      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      //endpoint: "https://afternoon-depths-66584.herokuapp.com",
+      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      endpoint: "https://afternoon-depths-66584.herokuapp.com",
       nombre: "",
       codigo: "",
       step:0
@@ -249,8 +249,6 @@ class Client extends Component {
               <div className="form-group">
     	          <label>No. identificación</label>
     	          <input
-                  pattern="[0-9]" 
-                  data-bind="value:replyNumber"
                   type="number" 
                   value={this.state.codigo} 
                   onChange={this.handleChangeCodigo}
