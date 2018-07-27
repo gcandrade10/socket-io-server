@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
-import swal from 'sweetalert';
 import './client.css';
 import Footer from './Footer.js';
 import Header from './Header.js';
@@ -54,7 +53,6 @@ class Client extends Component {
   this.info = {nombre:this.state.nombre, codigo:this.state.codigo};
 	this.socket.emit("Register", this.info);
 	this.setState({step: 1});
-  swal("Registro exitoso!", "Felicidades " + this.state.nombre + ". Te has registrado exitosamente!", "success");
   }
 
   handleSubmitFinal(event) {
@@ -69,7 +67,6 @@ class Client extends Component {
   });
   this.info.tiempo=this.state.time;
 	this.socket.emit("save", this.info);
-	swal("Respuesta enviada", "success");
   
   }
 
@@ -78,14 +75,12 @@ class Client extends Component {
     timerInstance.pause();
     this.setState({ step :6});
     this.socket.emit("question1", 1);
-  	swal("Respuesta enviada", "Success");
   }
 
   sendQuestion2(){
     timerInstance.pause();
     this.setState({ step :6});
     this.socket.emit("question2", 1);
-    swal("Respuesta enviada", "Success");
   }
 
   componentDidMount()
