@@ -248,8 +248,10 @@ class Client extends Component {
               </div>    
               <div className="form-group">
     	          <label>No. identificación</label>
-    	          <input 
-                  type="text" 
+    	          <input
+                  pattern="[0-9]" 
+                  data-bind="value:replyNumber"
+                  type="number" 
                   value={this.state.codigo} 
                   onChange={this.handleChangeCodigo}
                   className="form-control"

@@ -59,8 +59,7 @@ body .client-general{
 }
 
 .subscribe{
-  background-color: var(--accent-color);
-  background-color: var(--accent-color);
+  background-color: #FF7300;
   color: var(--text-primary);
   font-size: 3vw;
   margin-top: 5%;
