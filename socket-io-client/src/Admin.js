@@ -80,10 +80,10 @@ class Admin extends Component {
           {this.state.response.map(
             (f)=>
             <div className="row player" key={f.nombre}>
-              <img className="col-sm-4 img-responsive" 
+              <img className="col-sm-3 img-responsive" 
                 src="./login_icon.png"
                 alt="login icon" />
-              <div className="col-sm-8">
+              <div className="col-sm-9">
                 <h2 className="player-name">
                   Jugador - {f.nombre}
                 </h2>

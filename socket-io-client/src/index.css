@@ -216,12 +216,13 @@ body .admin-general {
 }
 
 .player{
-  width: 60%;
+  width: 80%;
   margin: 0px auto;
   font-size: 4vw;
 }
 
 .player-name{
+  text-align: left;
   font-weight: bold;
   font-style: bold;
 }
