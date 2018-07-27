@@ -10,8 +10,8 @@ class Admin extends Component {
     super();
     this.state = {
       response: false,
-      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
+      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      //endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
       step:0
     };
 
@@ -57,10 +57,10 @@ class Admin extends Component {
     return <div className="players-list container">
     {this.state.info.map(
       (f)=> <div className="row player" key={f.nombre}>
-          <img className="col-sm-4 img-responsive" 
+          <img className="col-sm-3 img-responsive" 
             src="./login_icon.png"
             alt="login icon" />
-          <div className="col-sm-8">
+          <div className="col-sm-9">
             <h2 className="player-name">
               {f.nombre} - {f.tiempo}
             </h2>

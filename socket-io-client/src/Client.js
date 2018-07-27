@@ -12,8 +12,8 @@ class Client extends Component {
     super();
     this.state = {
       response: false,
-      //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
-      endpoint: "https://afternoon-depths-66584.herokuapp.com",
+      endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+      //endpoint: "https://afternoon-depths-66584.herokuapp.com",
       nombre: "",
       codigo: "",
       step:0
@@ -140,7 +140,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
               }}
-            ><strong>a. {this.state.question.op1}</strong>
+            ><strong>{this.state.question.op1}</strong>
             </button>
             <button 
               className="btn option col-sm-6 form-group"
@@ -151,7 +151,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><strong>c. {this.state.question.op2}</strong>
+            ><strong>{this.state.question.op2}</strong>
             </button>
           </div>
           <div className="row">
@@ -164,7 +164,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><strong>b. {this.state.question.op3}</strong>
+            ><strong>{this.state.question.op3}</strong>
             </button>
 
             <button 
@@ -176,7 +176,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><strong>d. {this.state.question.op4}</strong>
+            ><strong>{this.state.question.op4}</strong>
             </button>
            </div>
       </div>);
