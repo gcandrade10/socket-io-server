@@ -81,7 +81,7 @@ socket.on("question2", data => {
     cerradas++;
     if(cerradas===clientsInfo.length)
     {
-      var question = {text:"¿Cómo definirías ese valor?"};
+      var question = {text:"¿Qué significa para ti ese valor?"};
       io.emit("question3",question);
     }
   });
