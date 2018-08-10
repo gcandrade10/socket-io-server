@@ -16,3 +16,18 @@ The main purpose of the application is to support the construction of community 
 The top part is the Player user flow, the bottom is the Admin user flow. In the middle of both flows is the communication with the backend and triggers from the backend. (All the diagram is just one line, it is separated in two lines because of the paper space).
 
 ![Image describing the flow of the application](https://i.imgur.com/bHxNnkB.jpg)
+
+## Installation
+
+To run this program in a machine it is necessary to clone or download the repository and open 2 terminals. Locate the first one on the main folder of the project and run npm install and npm start, and then go with the second terminal to the folder socket-io-client and run the same commands.
+
+Also it is necesary to go to the Admin.js and Client.js inside the src folder inside the client folder and change the following lines:
+  //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+  endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
+to:
+  endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
+  //endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
+  
+## Final deployment
+
+To deploy it in a server the endpoint variable that is changed on the local run (look the point installation) to the final url in which the application will be deployed.
