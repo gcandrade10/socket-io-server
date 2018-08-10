@@ -24,7 +24,7 @@ To run this program in a machine it is necessary to clone or download the reposi
 Also it is necesary to go to the Admin.js and Client.js inside the src folder inside the client folder and change the following lines:
   - //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
   - endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
-  to:
+  - to:
   - endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
   - //endpoint: "https://afternoon-depths-66584.herokuapp.com/#",
   
