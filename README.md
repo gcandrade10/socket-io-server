@@ -19,7 +19,52 @@ The top part is the Player user flow, the bottom is the Admin user flow. In the 
 
 ## Installation
 
-To run this program in a machine it is necessary to clone or download the repository and open 2 terminals. Locate the first one on the main folder of the project and run npm install and npm start, and then go with the second terminal to the folder socket-io-client and run the same commands.
+To run this program in a machine it is necessary to clone or download the repository:
+
+```
+git clone https://github.com/gcandrade10/socket-io-server.git
+```
+
+Move to the created folder:
+
+```
+cd socket-io-server
+```
+
+Execute:
+
+```
+npm install 
+```
+And then:
+
+```
+npm start 
+```
+
+Yow will see something like this:
+```
+> socket-io-server@1.0.0 start C:\Users\G\Desktop\socket-io-server
+> node index.js                                                                                                                         mongodb://alejandro:basededatos1@ds245901.mlab.com:45901/bienvenida
+Listening on port 4001 
+```
+
+Open a new terminal and go to socket-io-client
+
+```
+cd socket-io-client
+```
+
+Again execute:
+
+```
+npm install 
+```
+And then:
+
+```
+npm start 
+```
 
 Also it is necesary to go to the Admin.js and Client.js inside the src folder inside the client folder and change the following lines:
   - //endpoint: process.env.ENDPOINT || "127.0.0.1:4001",
