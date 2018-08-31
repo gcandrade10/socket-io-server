@@ -7,6 +7,10 @@ class Header extends Component {
             <img className="image-banner"
               src="./uniandes.png"
               alt="uniandes logo" />
+
+              <img className="image-banner-left"
+              src="./fopre.png"
+              alt="fopre cafe logo" />
         </div>
 		);
 	}

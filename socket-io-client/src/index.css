@@ -92,6 +92,14 @@ body .client-general{
   padding-left: 10px;
 }
 
+.client-general .image-banner-left{
+  position: absolute;
+  right: 0px;
+  padding-bottom: 5px;
+  width: 30vh;
+  padding-right: 10px;
+}
+
 .client-general .waiting {
   width: 70%;
   margin: 0px auto;
