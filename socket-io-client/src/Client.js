@@ -80,8 +80,6 @@ class Client extends Component {
   });
   this.info.tiempo=this.state.time;
 	this.socket.emit("save", this.info);
-  this.info = null;
-  
   }
 
   sendCerrada()
