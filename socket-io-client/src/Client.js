@@ -25,6 +25,7 @@ class Client extends Component {
     this.renderName = this.renderName.bind(this);
     this.renderOptionsClosed = this.renderOptionsClosed.bind(this);
     this.sendQuestion2 = this.sendQuestion2.bind(this);
+    this.handleSubmitSecondOpen = this.handleSubmitSecondOpen.bind(this);
     
   }
 
@@ -44,7 +45,7 @@ class Client extends Component {
   handleChangeCodigo(event) {
     this.setState({codigo: event.target.value});
   }
-   handleChangeAbierta(event) {
+  handleChangeAbierta(event) {
     this.setState({abierta: event.target.value});
   }
 
@@ -55,11 +56,23 @@ class Client extends Component {
 	this.setState({step: 1});
   }
 
+  handleSubmitSecondOpen(event){
+    if(this.state.number==1){
+      timerInstance.pause();
+      event.preventDefault();
+      this.info.abierta_uno=this.state.abierta;
+      this.setState({abierta:""});
+      this.socket.emit("question3", 1);
+    } else {
+      this.handleSubmitFinal(event);
+    }
+  }
+
   handleSubmitFinal(event) {
 	event.preventDefault();
   timerInstance.stop();
   this.setState({ step : 5});
-	this.info.abierta=this.state.abierta;
+	this.info.abierta_dos=this.state.abierta;
 	this.info.cerrada=this.state.cerrada;
   console.log(timerInstance.getTimeValues().toString());
   this.setState({
@@ -67,6 +80,7 @@ class Client extends Component {
   });
   this.info.tiempo=this.state.time;
 	this.socket.emit("save", this.info);
+  this.info = null;
   
   }
 
@@ -102,7 +116,6 @@ class Client extends Component {
     });
 
     this.socket.on("question2", data => {
-      timerInstance = new Timer();
       timerInstance.start();
       this.startTimer();
       console.log(data);
@@ -110,11 +123,17 @@ class Client extends Component {
     });
 
     this.socket.on("question3", data => {
-      timerInstance = new Timer();
       timerInstance.start();
       this.startTimer();
       console.log(data);
-      this.setState({ step : 4, question:data })
+      this.setState({ step : 4, question:data,number:1 })
+    });
+
+    this.socket.on("question4", data => {
+      timerInstance.start();
+      this.startTimer();
+      console.log(data);
+      this.setState({ step : 4, question:data,number:2 })
     });
 
     this.socket.on("beggining", data => {
@@ -129,7 +148,7 @@ class Client extends Component {
         <div className="container closed-question">
           <div className="row"> 
             <button 
-              className="btn option col-sm-6 form-group"
+              className="btn option col-sm-12 form-group"
               type="button"
               onClick = {() =>{
                   this.setState({
@@ -140,7 +159,7 @@ class Client extends Component {
             ><strong>{this.state.question.op1}</strong>
             </button>
             <button 
-              className="btn option col-sm-6 form-group"
+              className="btn option col-sm-12 form-group"
               type="button"
               onClick= {() =>{
                   this.setState({
@@ -153,7 +172,7 @@ class Client extends Component {
           </div>
           <div className="row">
             <button 
-              className="btn option col-sm-6 pl-1 pr-1"
+              className="btn option col-sm-12 pl-1 pr-1"
               type="button"
               onClick= {() =>{
                   this.setState({
@@ -165,7 +184,7 @@ class Client extends Component {
             </button>
 
             <button 
-              className="btn option col-sm-6 ml-1 mr-1"
+              className="btn option col-sm-12 ml-1 mr-1"
               type="button"
               onClick= {() =>{
                   this.setState({
@@ -187,7 +206,7 @@ class Client extends Component {
            <h1>Responde</h1>
   	       <form 
             className="form-open"
-            onSubmit={this.handleSubmitFinal}>
+            onSubmit={this.handleSubmitSecondOpen}>
              <div className="form-group">	        
   	           <textarea 
                 placeholder="Escribe aquí..."
@@ -198,10 +217,10 @@ class Client extends Component {
                 />          
   	         </div>
              <button 
-              className="btn subscribe"
+              className="btn continue"
               type="submit" 
               value="Sumbit">
-              Enviar
+              Continuar
               </button>
   	       </form>
         </div>
@@ -291,7 +310,7 @@ class Client extends Component {
                     className="btn continue"
                     onClick= {() =>{
                       this.sendQuestion2();
-                  }}>Continúa</button>
+                  }}>Continuar</button>
                   </div>
                   <Footer />
                 </div>);
@@ -306,8 +325,8 @@ class Client extends Component {
             <div className="client-general">
                   <Header />
                   <div className="admin-question">
-                    <h3>¡Gracias!</h3>
-                  <h1>Te damos la bienvenida y te invitamos a vivir diariamente los valores Uniandes.</h1>
+                  <h1>Tu aporte al FOPRE beneficia a muchos</h1>
+                  <h3>¡Gracias por tu solidaridad!</h3>
                   </div>
                   <Footer />
             </div>

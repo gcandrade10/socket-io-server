@@ -71,7 +71,7 @@ socket.on("question1", data => {
     cerradas++;
     if(cerradas===clientsInfo.length)
     {      
-      var question = {text:"Arroja una pelota en el cilindro con el valor que elegiste."};
+      var question = {text:"Lanza una pelota en la respuesta que elegiste, cuando aciertes presiona continuar"};
       io.emit("question2",question);    
       cerradas=0;    
     }
@@ -81,8 +81,19 @@ socket.on("question2", data => {
     cerradas++;
     if(cerradas===clientsInfo.length)
     {
-      var question = {text:"¿Qué significa para ti ese valor?"};
+      var question = {text:"¿Para qué se destinan los recursos del FOPRE?"};
       io.emit("question3",question);
+      cerradas=0;
+    }
+
+  });
+
+socket.on("question3", data => {
+    cerradas++;
+    if(cerradas===clientsInfo.length)
+    {
+      var question = {text:"Además del FOPRE café, ¿cómo vives la solidaridad en Uniandes?"};
+      io.emit("question4",question);
     }
   });
 //From state 4 to 5
@@ -91,7 +102,8 @@ socket.on("save", data => {
     info.push(data);
     var name = data.nombre;
     var codigo = data.codigo;
-    var abierta = data.abierta;
+    var abierta_uno = data.abierta_uno;
+    var abierta_dos = data.abierta_dos;
     var cerrada = data.cerrada;
     var tiempo = data.tiempo;
     console.log("data",data);
@@ -103,7 +115,8 @@ socket.on("save", data => {
         {
           name : name,
           codigo : codigo,
-          abierta : abierta,
+          abierta_uno : abierta_uno,
+          abierta_dos : abierta_dos,
           cerrada : cerrada,
           tiempo : tiempo
         },
@@ -144,7 +157,7 @@ app.get("/api/reset", (req, res) =>
 app.get("/api/play", (req, res) => 
 {
   console.log("play");
-  var question = {text:"¿Cuál es el valor con el que más identificas a Uniandes?", abierta:false, op1:"Libertad", op2:"Excelencia", op3:"Solidaridad", op4:"Integridad"};
+  var question = {text:"¿Qué es lo que más te motiva para venir al FOPRE?", abierta:false, op1:"La variedad de restaurantes", op2:"Poder compartir un espacio diferente", op3:"Apoyar la causa del FOPRE", op4:"Conocer o encontrarme con otras personas"};
   io.emit("question1",question);
   res.send("ok");
 });

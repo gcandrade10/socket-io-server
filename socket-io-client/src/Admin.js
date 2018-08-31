@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import './admin.css';
 import Footer from './Footer.js';
+import Header from './Header.js';
 
 
 
@@ -32,6 +33,10 @@ class Admin extends Component {
     });
 
     this.socket.on("question3", data => {
+      this.setState({ step : 5, question:data })
+    });
+
+    this.socket.on("question4", data => {
       this.setState({ step : 5, question:data })
     });
 
@@ -108,6 +113,8 @@ class Admin extends Component {
     switch (this.state.step) {
       case 0:
         return (
+          <div>
+          <Header />
           <div className="admin-general">
             <button type="button"
               className="btn start-game"
@@ -120,10 +127,13 @@ class Admin extends Component {
               Nuevo juego
             </button>
             <Footer />
+          </div>
           </div>);
         
       case 1:
       return (
+        <div>
+          <Header />
           <div className="admin-general"
           style={{ textAlign: "center" }}>
             {this.state.response
@@ -134,6 +144,7 @@ class Admin extends Component {
                 </div>}  
             <Footer />          
           </div>
+        </div>
         );
 
       case 2:
@@ -174,7 +185,7 @@ class Admin extends Component {
       return (
          <div className="admin-general"
           style={{ textAlign: "center" }}>
-              <h1>Scoreboard</h1>
+              <h1>¡Felicitaciones!</h1>
               {this.renderScoreboard()}
               <button type="button"
               className="btn start-game"

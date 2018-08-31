@@ -28,23 +28,16 @@ main {
 /**CLIENTE**/
 body .client-general{
   height: 100%;
-  background-image: url("./admin/background-right.png"),
-                    url("./admin/background-left.png"),
-                    url("./client/background.png");
-  background-repeat: no-repeat,
-      no-repeat,
-      no-repeat;
-  background-position: right,
-      left,
-      center;
-  background-size: 100%, 100%, cover;
+  background-image: url("./client/background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   text-align: center;
 }
 
 .login-form {
   width: 80%;
   margin: 0px auto;
-  background-color:rgba(57, 65, 140, 0.7);
   font-family: 'Hind', sans-serif;
   padding-bottom: 5%;
 }
@@ -59,7 +52,7 @@ body .client-general{
 }
 
 .subscribe{
-  background-color: #FF7300;
+  background-color: #43a047;
   color: var(--text-primary);
   font-size: 3vw;
   margin-top: 5%;
@@ -68,7 +61,7 @@ body .client-general{
 }
 
 .continue{
-  background-color: #FF7300;
+  background-color: #43a047;
   color: var(--text-primary);
   font-size: 5vw;
   margin-top: 5%;
@@ -76,7 +69,7 @@ body .client-general{
   padding-right: 10%;
 }
 
-.client-general .header{
+.header{
   width:100%;
   height:15vh;
   overflow:hidden;
@@ -85,14 +78,14 @@ body .client-general{
   box-shadow: 5px 5px 3px black;
 }
 
-.client-general .image-banner{
+.image-banner{
   padding-top: 5px;
   padding-bottom: 5px;
   width: 30vh;
   padding-left: 10px;
 }
 
-.client-general .image-banner-left{
+.image-banner-left{
   position: absolute;
   right: 0px;
   padding-bottom: 5px;
@@ -102,9 +95,8 @@ body .client-general{
 
 .client-general .waiting {
   width: 70%;
-  margin: 0px auto;
-  background: rgb(255, 255, 255, 0.5);
-  color: var(--text-secondary);
+  margin: 0px auto;;
+  color: #000000;
 }
 
 .client-general .waiting h1 {
@@ -114,16 +106,19 @@ body .client-general{
 
 .option {
   background-color: #FF7300;
-  font-size: 5vh;
-  color: white;
+  font-size: 3vh;
+  color: black;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid grey;
 }
 
 .closed-question {
-  padding-top: 20%;
+  padding-top: 10%;
   padding-bottom: 10%;
   width: 70%;
   margin: 0px auto;
-  background-color:rgba(57, 65, 140, 0.7);
 }
 
 .open-question {
@@ -131,7 +126,6 @@ body .client-general{
   padding-top: 10%;
   width: 70%;
   margin: 0px auto;
-  background-color:rgba(57, 65, 140, 0.7);
 }
 
 .open-question h1 {
@@ -141,23 +135,20 @@ body .client-general{
   font-style: bold;
   padding-left: 5%;
   padding-right: 5%;
+  color: black;
+}
+
+.open-question .continue{
+  color: black;
 }
 
 /**ADMINISTRADOR**/
 body .admin-general {
   height: 100%;
-  background-image: url("./admin/background-right.png"),
-                    url("./admin/background-left.png"),
-                    url("./admin/background.png");
-  background-repeat: no-repeat,
-      no-repeat,
-      no-repeat;
-  background-position: right,
-      left,
-      center;
-  background-size: 100%,
-      100%,
-      cover;
+  background-image: url("./admin/background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   text-align: center;
 }
 
@@ -167,7 +158,6 @@ body .admin-general {
    margin:0px auto;
   width: 65%;
   padding-bottom: 5%;
-  background-color:rgba(0, 0, 0, 0.7);
 }
 
 .waiting h1{
@@ -182,7 +172,7 @@ body .admin-general {
 
 
 .admin-question h3 {
-  color: #FFD300;
+  color: black;
   font-size: 10vw;
   font-weight: bold;
 }
@@ -209,7 +199,6 @@ body .admin-general {
 .players-list{
   width: 80%;
   margin: 0px auto;
-  background-color:rgba(57, 65, 140, 0.7);
 }
 
 .list-group{
@@ -249,7 +238,6 @@ body .admin-general {
 .admin-question {
   width: 80%;
   margin: 0px auto;
-  background-color:rgba(57, 65, 140, 0.7);
   padding-top: 10%;
   padding-bottom: 10%;
 }
@@ -260,7 +248,6 @@ body .admin-general {
 }
 
 .footer {
-  background-color: #FF7300;
   margin-right: 10%;
   margin-left: 10%;
   padding-top: 1%;
@@ -268,6 +255,16 @@ body .admin-general {
   padding-right: 5%;
   margin-top: 5%;
   position: relative;
+}
+
+.admin-general .footer {
+  background-color: black;
+  color: #fb8c00;
+}
+
+.client-general .footer {
+  background-color: #ef6c00;
+  color: white;
 }
 
 .details {
