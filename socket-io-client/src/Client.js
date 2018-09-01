@@ -146,7 +146,7 @@ class Client extends Component {
         <div className="container closed-question">
           <div className="row"> 
             <button 
-              className="btn option col-sm-12 form-group"
+              className="btn option col-sm-12 form-group container"
               type="button"
               onClick = {() =>{
                   this.setState({
@@ -154,7 +154,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
               }}
-            ><strong>{this.state.question.op1}</strong>
+            ><div className="col-sm-12"><strong>a. {this.state.question.op1}</strong></div>
             </button>
             <button 
               className="btn option col-sm-12 form-group"
@@ -165,7 +165,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><strong>{this.state.question.op2}</strong>
+            ><strong>b. {this.state.question.op2}</strong>
             </button>
           </div>
           <div className="row">
@@ -178,7 +178,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><strong>{this.state.question.op3}</strong>
+            ><strong>c. {this.state.question.op3}</strong>
             </button>
 
             <button 
@@ -190,7 +190,7 @@ class Client extends Component {
                   });
                   this.sendCerrada();
                 }}
-            ><strong>{this.state.question.op4}</strong>
+            ><strong>d. {this.state.question.op4}</strong>
             </button>
            </div>
       </div>);
