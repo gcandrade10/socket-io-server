@@ -63,6 +63,7 @@ class Client extends Component {
       this.info.abierta_uno=this.state.abierta;
       this.setState({abierta:""});
       this.socket.emit("question3", 1);
+      this.setState({step:6});
     } else {
       this.handleSubmitFinal(event);
     }
